@@ -4,9 +4,7 @@ title: About Me
 permalink: /about/
 ---
 
-This SHOULD LINK TO WEBSITE once it's 'live'.
+<meta http-equiv="refresh" content="0; url=http://localhost:3000/aboutme.html"> 
 
-
-
------ //// This website is powered by **[fastpages](https://github.com/fastai/fastpages)** [^1].
------ //// [^1]:a blogging platform that natively supports Jupyter notebooks in addition to other formats.
+<!-- This website is powered by **[fastpages](https://github.com/fastai/fastpages)** [^1].>
+<!-- [^1]:a blogging platform that natively supports Jupyter notebooks in addition to other formats.>
