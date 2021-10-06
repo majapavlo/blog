@@ -27,6 +27,17 @@
   
 
   
+      ,"page1": {
+          "title": "About Me",
+          "content": "This SHOULD LINK TO WEBSITE once it’s ‘live’. . —– //// This website is powered by fastpages [^1]. —– //// [^1]:a blogging platform that natively supports Jupyter notebooks in addition to other formats. .",
+          "url": "https://majapavlo.github.io/blog/about/",
+          "relUrl": "/about/",
+          "date": ""
+      }
+      
+  
+
+  
 
   
   
@@ -48,7 +59,7 @@
   
 
   
-      ,"page9": {
+      ,"page10": {
           "title": "",
           "content": "Sitemap: {{ “sitemap.xml” | absolute_url }} | .",
           "url": "https://majapavlo.github.io/blog/robots.txt",
