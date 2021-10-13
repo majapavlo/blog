@@ -1,1 +1,1 @@
-Sitemap: https://majapavlo.github.io/index.html/sitemap.xml
+Sitemap: https://majapavlo.github.io/index/sitemap.xml
