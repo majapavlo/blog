@@ -29,8 +29,9 @@ Overview of ML concepts and DL
 ## Youtube
 
 ### 3Blue1Brown
-![]({{ site.baseurl }}/images/tab_sites/3b1b.png "3b1b's logo")
 Text 123
+<img src="images/tab_sites/3b1b.png" alt="drawing" width="20"/>
+<!--[]({{ site.baseurl }}/images/tab_sites/3b1b.png "3b1b's logo")-->
 
 ### Statquest
 Text 123
