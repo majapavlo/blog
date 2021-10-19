@@ -30,7 +30,7 @@ Overview of ML concepts and DL
 
 ### 3Blue1Brown
 Text 123
-<img src="images/tab_sites/3b1b.png" alt="drawing" width="20"/>
+<img src="https://majapavlo.github.io/blog/images/tab_sites/3b1b.png" alt="3b1b's logo" width="20"/>
 <!--[]({{ site.baseurl }}/images/tab_sites/3b1b.png "3b1b's logo")-->
 
 ### Statquest
