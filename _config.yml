@@ -41,7 +41,7 @@ minima:
   social_links:
     twitter: "maja_pavlo"
     github: "majapavlo"
-    #linkedin: "https://www.linkedin.com/in/maja-pavlovic/"
+    linkedin: "https://www.linkedin.com/in/maja-pavlovic/"
     #email: "mapavlo@gmail.com"
 
 # Set this to true to get LaTeX math equation support
