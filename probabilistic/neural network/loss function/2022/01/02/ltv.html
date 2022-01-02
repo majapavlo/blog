@@ -10,14 +10,14 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="A run through the paper’s neural network architecture and loss function" />
 <meta property="og:description" content="A run through the paper’s neural network architecture and loss function" />
-<link rel="canonical" href="https://majapavlo.github.io/blog/jupyter/2022/01/02/ltv.html" />
-<meta property="og:url" content="https://majapavlo.github.io/blog/jupyter/2022/01/02/ltv.html" />
+<link rel="canonical" href="https://majapavlo.github.io/blog/probabilistic/neural%20network/loss%20function/2022/01/02/ltv.html" />
+<meta property="og:url" content="https://majapavlo.github.io/blog/probabilistic/neural%20network/loss%20function/2022/01/02/ltv.html" />
 <meta property="og:site_name" content="mp" />
 <meta property="og:image" content="https://majapavlo.github.io/blog/images/previews/ltv.PNG" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2022-01-02T00:00:00-06:00" />
 <script type="application/ld+json">
-{"datePublished":"2022-01-02T00:00:00-06:00","url":"https://majapavlo.github.io/blog/jupyter/2022/01/02/ltv.html","@type":"BlogPosting","image":"https://majapavlo.github.io/blog/images/previews/ltv.PNG","headline":"Customer Lifetime Value Prediction using a Deep Probabilistic Neural Network","dateModified":"2022-01-02T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://majapavlo.github.io/blog/jupyter/2022/01/02/ltv.html"},"description":"A run through the paper’s neural network architecture and loss function","@context":"https://schema.org"}</script>
+{"datePublished":"2022-01-02T00:00:00-06:00","url":"https://majapavlo.github.io/blog/probabilistic/neural%20network/loss%20function/2022/01/02/ltv.html","@type":"BlogPosting","image":"https://majapavlo.github.io/blog/images/previews/ltv.PNG","headline":"Customer Lifetime Value Prediction using a Deep Probabilistic Neural Network","dateModified":"2022-01-02T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://majapavlo.github.io/blog/probabilistic/neural%20network/loss%20function/2022/01/02/ltv.html"},"description":"A run through the paper’s neural network architecture and loss function","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://majapavlo.github.io/blog/feed.xml" title="mp" /><link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -94,14 +94,20 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      15 min read
+      14 min read
     
 </span></p>
 
     
       <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
       
-        <a class="category-tags-link" href="/blog/categories/#jupyter">jupyter</a>
+        <a class="category-tags-link" href="/blog/categories/#probabilistic">probabilistic</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#neural network">neural network</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#loss function">loss function</a>
         
       
       </p>
@@ -274,13 +280,13 @@ $$ MSE  Loss = \frac{1}{N} \sum_{i=1}^{N} (x_i - \hat{x_i})^2 $$
 </h4>
 <p>Here both cases have a true value of 20, but in case 1 we under-predict by 6, whereas in case 2 we over-predict by 6. The table below compares the different losses on both cases again. We can see that the MSE penalises underestimates and overestimates equally, while the lognormal loss penalises underestimates more than overestimates.</p>
 <p><img src="/blog/images/copied_from_nb/2022-01-02-ltv/table3.PNG" alt="" title="Table 3"></p>
-<p>This asymmetric behaviour is visualised in the figure 9 below¹.<sup id="fnref-1" class="footnote-ref"><a href="#fn-1">1</a></sup> While the MSE is symmetrical around the minimum, it shows that the lognormal loss gets more asymmetric as σ² increases.</p>
+<p>This asymmetric behaviour is visualised in the figure 9 below<sup id="fnref-1" class="footnote-ref"><a href="#fn-1">1</a></sup>. While the MSE is symmetrical around the minimum, it shows that the lognormal loss gets more asymmetric as σ² increases.</p>
 <p><img src="/blog/images/copied_from_nb/2022-01-02-ltv/fig9.png" alt="" title="Figure 9"></p>
 <p>So far, we’ve looked at the loss function in terms of its median. The median is defined as exp(μ), meaning we used μ=log(x) in the loss function. Wang, Liu and Miao, however, suggest predicting LTV as the mean of the lognormal distribution, which is:</p>
 <p>
 $$ E(X) = \exp \left(\mu + \frac{\sigma^2}{2} \right)$$
 </p>
-<p>This means we substitute μ with $\log(x) - \frac{σ²}{2}$ in the loss function. The loss still behaves in the same way as above. The only difference this creates is a bias in our predictions towards a higher number. The higher σ² the higher our predicted LTV will be. If for instance our true value is 20, and we perfectly predict the μ-unit but have a σ² of 0.3, then our predicted LTV will be about 23.2. The same value with a σ² of only 0.01 would give us an LTV prediction of about 20.1 (much closer to our true value). We can see the shift in minimum prediction in the figure 10 below².<sup id="fnref-2" class="footnote-ref"><a href="#fn-2">2</a></sup></p>
+<p>This means we substitute μ with $\log(x) - \frac{σ²}{2}$ in the loss function. The loss still behaves in the same way as above. The only difference this creates is a bias in our predictions towards a higher number. The higher σ² the higher our predicted LTV will be. If for instance our true value is 20, and we perfectly predict the μ-unit but have a σ² of 0.3, then our predicted LTV will be about 23.2. The same value with a σ² of only 0.01 would give us an LTV prediction of about 20.1 (much closer to our true value). We can see the shift in minimum prediction in the figure 10 below<sup id="fnref-2" class="footnote-ref"><a href="#fn-2">2</a></sup>.</p>
 <p><img src="/blog/images/copied_from_nb/2022-01-02-ltv/fig10.png" alt="" title="Figure 10"></p>
 <p>Both the mean and median are viable approaches when using the lognormal. But when do we use the lognormal instead of the MSE? The lognormal loss should be considered more favourable to the MSE when the range of our true values (LTV) is large as we don’t want large values to be penalised more.</p>
 
@@ -324,16 +330,6 @@ $$ ZILN Loss = MSE Loss + Lognormal Loss$$
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><em>Footnotes</em></p>
-<p><strong>¹</strong> For all losses to start at the same minimum y-value the minimum of each loss itself was subtracted, which is why the y-axis values differ to the direct loss calculations from the table above.</p>
-<p><strong>²</strong> The figure in the paper looks like it has been scaled on each of the loss functions to show the effect of shift in a clearer way</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <hr>
 
 </div>
@@ -355,7 +351,7 @@ $$ ZILN Loss = MSE Loss + Lognormal Loss$$
 
 
 
-  </div><a class="u-url" href="/blog/jupyter/2022/01/02/ltv.html" hidden></a>
+  </div><a class="u-url" href="/blog/probabilistic/neural%20network/loss%20function/2022/01/02/ltv.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">
