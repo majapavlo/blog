@@ -94,7 +94,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      10 min read
+      14 min read
     
 </span></p>
 
@@ -124,10 +124,12 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#Deep-Dive:-ZILN-Loss">Deep Dive: ZILN Loss </a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#Binary-Cross-Entropy-(BCE)-Loss-—-Churn">Binary Cross Entropy (BCE) Loss — Churn </a></li>
+<li class="toc-entry toc-h3"><a href="#Lognormal-Loss-—-LTV">Lognormal Loss — LTV </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#Lognormal-takes-more-of-a-relative-look">Lognormal takes more of a relative look </a></li>
+<li class="toc-entry toc-h4"><a href="#Lognormal-penalises-underestimates-more-than-overestimates">Lognormal penalises underestimates more than overestimates </a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h1"><a href="#L">L </a>
-<ul>
 <li class="toc-entry toc-h3"><a href="#Zero-Inflated-Lognormal-(ZILN)-Loss-—-Churn-&-LTV-together">Zero-Inflated-Lognormal (ZILN) Loss — Churn &amp; LTV together </a></li>
 <li class="toc-entry toc-h3"><a href="#Summary">Summary </a></li>
 </ul>
@@ -245,9 +247,43 @@ $$        \approx 0.051 $$
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="L">
-<a class="anchor" href="#L" aria-hidden="true"><span class="octicon octicon-link"></span></a>L<a class="anchor-link" href="#L"> </a>
-</h1>
+<h3 id="Lognormal-Loss-—-LTV">
+<a class="anchor" href="#Lognormal-Loss-%E2%80%94-LTV" aria-hidden="true"><span class="octicon octicon-link"></span></a>Lognormal Loss — LTV<a class="anchor-link" href="#Lognormal-Loss-%E2%80%94-LTV"> </a>
+</h3>
+<p>As mentioned above, rather than predicting a single point estimate for the LTV task of the network it is preferable to have a full prediction distribution. The distribution can give us an idea about the spread of observation points around our predicted LTV value. Wang, Liu and Miao propose using the lognormal distribution. The two parameters μ and σ from above describe the distribution’s probability density function (PDF): $ PDF = \frac{1}{x \sigma \sqrt{2 \pi}} \exp \left( - \frac{(\log x - \mu)^2}{2 \sigma^2} \right) $ See figure 8 below. This lognormal distribution resembles typical LTV data quite well: it is right-skewed, starting at zero and going into positive infinity. Hence, it makes sense for the neural network to learn the parameters of the lognormal distribution.</p>
+<p><img src="/blog/images/copied_from_nb/2022-01-02-ltv/fig8.png" alt="" title="Figure 8"></p>
+<p>We can obtain the lognormal loss by taking the negative log-likelihood of the lognormal distribution, see the loss function below. We won’t go through the steps of deriving the loss. The main idea is to simply compare the lognormal loss to the classic MSE loss and see how it behaves differently to the MSE.</p>
+<p>
+$$ Lognormal  Loss = \frac{1}{N} \sum_{i=1}^{N} \log(x_i \sigma \sqrt{2 \pi}) + \frac{(\log x_i - \mu)^2}{2 \sigma^2}$$
+
+        xᵢ is our actual true value, μ &amp; σ are the estimated parameters for the lognormal probability distribution, N is the number of samples</p>
+<p>Versus the MSE loss:
+
+$$ MSE  Loss = \frac{1}{N} \sum_{i=1}^{N} (x_i - \hat{x_i})^2 $$
+
+        xᵢ is our actual true value and xᵢ is the predicted value, N is the number of samples</p>
+<p>Let’s look at a few examples. The first example will show us how these losses differ on small and large prediction values. The second example will show us how they differ when predictions are over- or under-estimated.</p>
+<h4 id="Lognormal-takes-more-of-a-relative-look">
+<a class="anchor" href="#Lognormal-takes-more-of-a-relative-look" aria-hidden="true"><span class="octicon octicon-link"></span></a>Lognormal takes more of a relative look<a class="anchor-link" href="#Lognormal-takes-more-of-a-relative-look"> </a>
+</h4>
+<p>We have a case where our true median value of the lognormal distribution is 20 and another case where this true value is 20,000. The table below compares the MSE loss to the Lognormal loss (with two different σ² values). We can see that the <strong>MSE penalises high spenders</strong> (case 2, loss: 16,000,000) <strong>more harshly</strong> compared to lower spenders (case 1, loss: 16). The loss in case 2 is 1,000,000 times larger than for case 1, despite the relative deviation from the true value being the same.</p>
+<p><img src="/blog/images/copied_from_nb/2022-01-02-ltv/table2.PNG" alt="" title="Table 2"></p>
+<p>Given that a high-value customer typically spends orders of magnitude more than a normal customer, the MSE is less suited for this problem. It would over-penalise the prediction errors for our high value customers. The Lognormal on the other hand will treat small differences from the average spending customer almost the same as large differences from high-value customer predictions.</p>
+<h4 id="Lognormal-penalises-underestimates-more-than-overestimates">
+<a class="anchor" href="#Lognormal-penalises-underestimates-more-than-overestimates" aria-hidden="true"><span class="octicon octicon-link"></span></a>Lognormal penalises underestimates more than overestimates<a class="anchor-link" href="#Lognormal-penalises-underestimates-more-than-overestimates"> </a>
+</h4>
+<p>Here both cases have a true value of 20, but in case 1 we under-predict by 6, whereas in case 2 we over-predict by 6. The table below compares the different losses on both cases again. We can see that the MSE penalises underestimates and overestimates equally, while the lognormal loss penalises underestimates more than overestimates.</p>
+<p><img src="/blog/images/copied_from_nb/2022-01-02-ltv/table3.PNG" alt="" title="Table 3"></p>
+<p>This asymmetric behaviour is visualised in the figure 9 below¹. While the MSE is symmetrical around the minimum, it shows that the lognormal loss gets more asymmetric as σ² increases.</p>
+<p><img src="/blog/images/copied_from_nb/2022-01-02-ltv/fig9.png" alt="" title="Figure 9"></p>
+<p>So far, we’ve looked at the loss function in terms of its median. The median is defined as exp(μ), meaning we used μ=log(x) in the loss function. Wang, Liu and Miao, however, suggest predicting LTV as the mean of the lognormal distribution, which is:</p>
+<p>
+$$ E(X) = \exp \left(\mu + \frac{\sigma^2}{2} \right)$$
+</p>
+<p>This means we substitute μ with $\log(x) - \frac{σ²}{2}$ in the loss function. The loss still behaves in the same way as above. The only difference this creates is a bias in our predictions towards a higher number. The higher σ² the higher our predicted LTV will be. If for instance our true value is 20, and we perfectly predict the μ-unit but have a σ² of 0.3, then our predicted LTV will be about 23.2. The same value with a σ² of only 0.01 would give us an LTV prediction of about 20.1 (much closer to our true value). We can see the shift in minimum prediction in the figure 10 below².</p>
+<p><img src="/blog/images/copied_from_nb/2022-01-02-ltv/fig10.png" alt="" title="Figure 10"></p>
+<p>Both the mean and median are viable approaches when using the lognormal. But when do we use the lognormal instead of the MSE? The lognormal loss should be considered more favourable to the MSE when the range of our true values (LTV) is large as we don’t want large values to be penalised more.</p>
+
 </div>
 </div>
 </div>
