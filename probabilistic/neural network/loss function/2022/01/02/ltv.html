@@ -303,7 +303,7 @@ $$ E(X) = \exp \left(\mu + \frac{\sigma^2}{2} \right)$$
 <p><img src="/blog/images/copied_from_nb/2022-01-02-ltv/fig11.PNG" alt="" title="Figure 11"></p>
 <p>Wang, Liu and Miao assume an equal weighting for each subtask, so the loss function ends up looking as follows:</p>
 <p>
-$$ ZILN Loss = MSE Loss + Lognormal Loss$$
+$$ ZILN Loss = BCE Loss + Lognormal Loss$$
 </p>
 <p>This means we end up training the neural network by simply minimising the sum of the two loss functions (BCE and Lognormal loss).</p>
 
