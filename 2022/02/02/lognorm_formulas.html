@@ -130,10 +130,13 @@ window.onload = wrap_img;
 <a class="anchor" href="#Obtaining-the-log-normal-maximum-likelihood-estimators:" aria-hidden="true"><span class="octicon octicon-link"></span></a>Obtaining the log-normal maximum likelihood estimators:<a class="anchor-link" href="#Obtaining-the-log-normal-maximum-likelihood-estimators:"> </a>
 </h2>
 <p>We start with the likelihood function which is:</p>
-<p><img src="/blog/images/copied_from_nb/2022-02-02-lognorm-formulas/F1.PNG" alt="" title="Figure 1"></p>
+<p><img src="/blog/images/copied_from_nb/2022-02-02-lognorm-formulas/F1.PNG" alt=""></p>
 <p>We then take the natural log of the likelihood function (helps simplify our calculations).</p>
+<p><img src="/blog/images/copied_from_nb/2022-02-02-lognorm-formulas/F2.PNG" alt=""></p>
 <p>To find the μ and σ which maximise our log-likelihood function we take the gradient of our log-likelihood function with respect to μ and σ and set it to 0.</p>
+<p><img src="/blog/images/copied_from_nb/2022-02-02-lognorm-formulas/F3.PNG" alt=""></p>
 <p>To prove that these two estimators maximise our log-likelihood function we confirm that the Hessian matrix is negative-definite. We won’t look into these steps here.</p>
+<p>...</p>
 
 </div>
 </div>
@@ -144,7 +147,9 @@ window.onload = wrap_img;
 <h2 id="Obtaining-the-mode:">
 <a class="anchor" href="#Obtaining-the-mode:" aria-hidden="true"><span class="octicon octicon-link"></span></a>Obtaining the mode:<a class="anchor-link" href="#Obtaining-the-mode:"> </a>
 </h2>
+<p><img src="/blog/images/copied_from_nb/2022-02-02-lognorm-formulas/F4.PNG" alt=""></p>
 <p>The mode is the value that maximises the probability density function (pdf). We, therefore, take the gradient with respect to x and set it equal to 0.</p>
+<p><img src="/blog/images/copied_from_nb/2022-02-02-lognorm-formulas/F5.PNG" alt=""></p>
 
 </div>
 </div>
@@ -155,7 +160,9 @@ window.onload = wrap_img;
 <h2 id="Obtaining-the-median:">
 <a class="anchor" href="#Obtaining-the-median:" aria-hidden="true"><span class="octicon octicon-link"></span></a>Obtaining the median:<a class="anchor-link" href="#Obtaining-the-median:"> </a>
 </h2>
+<p><img src="/blog/images/copied_from_nb/2022-02-02-lognorm-formulas/F6.PNG" alt=""></p>
 <p>erf is the error function. The median is the value where the cumulative distribution function (cdf) is 0.5.</p>
+<p><img src="/blog/images/copied_from_nb/2022-02-02-lognorm-formulas/F7.PNG" alt=""></p>
 
 </div>
 </div>
