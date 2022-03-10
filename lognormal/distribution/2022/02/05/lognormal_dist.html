@@ -187,10 +187,8 @@ $$f(x) = \frac{1}{x\sigma \sqrt{2\pi}} e^{-\frac{1}{2}\left( \frac{ln x -\mu}{\s
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-
-<pre><code>    “The most efficient way to analyse log-normally distributed data consists of applying the well-known methods based on the normal distribution to logarithmically transformed data and then to back-transform results if appropriate.”
-</code></pre>
-<p><a href="https://en.wikipedia.org/wiki/Log-normal_distribution#Statistics">Lognormal wiki</a></p>
+<p><em>“The most efficient way to analyse log-normally distributed data consists of applying the well-known methods based on the normal distribution to logarithmically transformed data and then to back-transform results if appropriate.”</em>
+<a href="https://en.wikipedia.org/wiki/Log-normal_distribution#Statistics">Lognormal wiki</a></p>
 
 </div>
 </div>
@@ -270,6 +268,13 @@ $$\hat\sigma^2 = \frac{\sum_{k} \left(ln (x_k) - \hat\mu \right)^2 }{n}$$
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We can now <strong>estimate μ</strong> with the logic from above. First, we take the log of each of our income data points and then calculate the average value for the 5 transformed data points, see below:</p>
 <p><img src="/blog/images/copied_from_nb/2022-02-05-lognorm/Table1.PNG" alt="" title="Table 1"></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>
 $$\hat\mu = \frac{2.9957+3.0910+3.2188+3.4011+4.0943}{5} \approx 3.36$$
 </p>
@@ -294,7 +299,21 @@ $$\hat\sigma = \sqrt{\frac{\sum_{k} \left(ln (x_k) - \hat\mu \right)^2 }{n-1}}$$
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Rather than calculating σ², we take the square root of the formula above to approximate σ. The formula also uses n-1 instead of just n to get a less biased estimator. If you want to understand more on this change have a look at <a href="https://www.statlect.com/glossary/adjusted-sample-variance">corrected sample variance</a> (or also <a href="https://en.wikipedia.org/wiki/Bessel%27s_correction">Bessel’s correction</a>).</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p><img src="/blog/images/copied_from_nb/2022-02-05-lognorm/Table2.PNG" alt="" title="Table 2"></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Similar to above, the first step is to take the logarithm of each individual income data point. We then subtract the estimated μ from each log-transformed data point and then square each result. See table above. These values are then inserted into the formula from above:</p>
 <p>
 $$\hat\sigma = \sqrt{\frac{(ln(20)-3.36)^2 + (ln(22)-3.36)^2 + (ln(25)-3.36)^2 + (ln(30)-3.36)^2 + (ln(60)-3.36)^2}{5-1}} \approx 0.4376$$
