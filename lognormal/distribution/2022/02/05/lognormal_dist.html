@@ -297,7 +297,6 @@ $$\hat\sigma^2 = \frac{\sum_{k} \left(ln (x_k) - \hat\mu \right)^2 }{n}$$
 </tr>
 </tbody>
 </table>
-<p><img src="/blog/images/copied_from_nb/2022-02-05-lognorm/Table1.PNG" alt="" title="Table 1"></p>
 
 </div>
 </div>
@@ -385,7 +384,6 @@ $$\hat\sigma = \sqrt{\frac{\sum_{k} \left(ln (x_k) - \hat\mu \right)^2 }{n-1}}$$
 </tr>
 </tbody>
 </table>
-<p><img src="/blog/images/copied_from_nb/2022-02-05-lognorm/Table2.PNG" alt="" title="Table 2"></p>
 
 </div>
 </div>
@@ -420,7 +418,37 @@ $$\hat\sigma = \sqrt{\frac{0.1327+0.0724+0.0199+0.0017+0.5393}{5-1}} \approx 0.4
 <a class="anchor" href="#Calculate-median,-mean,-mode-&amp;-variance" aria-hidden="true"><span class="octicon octicon-link"></span></a>Calculate median, mean, mode &amp; variance<a class="anchor-link" href="#Calculate-median,-mean,-mode-&amp;-variance"> </a>
 </h2>
 <p>Extracting some of the important properties of the log-normal distribution is straightforward once we have our parameters μ and σ. See key properties, their formula, and the calculation for our example data in the table and figure below.</p>
-<p><img src="/blog/images/copied_from_nb/2022-02-05-lognorm/Table3.PNG" alt="" title="Table 3"></p>
+<table>
+<thead>
+<tr>
+<th>$Property$</th>
+<th>$Formula$</th>
+<th>$Calculation$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Median</strong></td>
+<td>$Med[X]=e^μ$</td>
+<td>$Med[X]=e^{3.36} \approx 28.789$</td>
+</tr>
+<tr>
+<td><strong>Mean</strong></td>
+<td>$E[X]=e^{μ+0.5σ^2}$</td>
+<td>$E[X]=e^{3.36+0.5*0.4376^2} \approx 31.682$</td>
+</tr>
+<tr>
+<td><strong>Mode</strong></td>
+<td>$Mode[X]=e^{μ-σ^2}$</td>
+<td>$Mode[X]=e^{3.36-0.4376^2} \approx 23.772$</td>
+</tr>
+<tr>
+<td><strong>Variance</strong></td>
+<td>$Var[X]=(e^{σ^2}-1)e^{2μ+σ^2}$</td>
+<td>$Var[X]=(e^{0.4376^2}-1)e^{2*3.36+0.4376^2} \approx 211.848$</td>
+</tr>
+</tbody>
+</table>
 <h4 id="How-do-we-arrive-at-the-different-formulas-in-the-table-above?">
 <a class="anchor" href="#How-do-we-arrive-at-the-different-formulas-in-the-table-above?" aria-hidden="true"><span class="octicon octicon-link"></span></a>How do we arrive at the different formulas in the table above?<a class="anchor-link" href="#How-do-we-arrive-at-the-different-formulas-in-the-table-above?"> </a>
 </h4>
