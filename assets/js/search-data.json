@@ -64,10 +64,6 @@
   
 
   
-
-  
-
-  
   
 
   
@@ -87,7 +83,7 @@
   
 
   
-      ,"page12": {
+      ,"page10": {
           "title": "",
           "content": "Sitemap: {{ “sitemap.xml” | absolute_url }} | .",
           "url": "https://majapavlo.github.io/blog/robots.txt",
